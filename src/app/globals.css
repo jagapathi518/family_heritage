@@ -2,63 +2,57 @@
 @import "@xyflow/react/dist/style.css";
 
 :root {
-  --background: #fbf9f5;
-  --foreground: #2c2523;
+  --background: #fdfbf7;
+  --foreground: #1c1917;
   --card: #ffffff;
-  --card-foreground: #2c2523;
+  --card-foreground: #1c1917;
   --popover: #ffffff;
-  --popover-foreground: #2c2523;
-  --primary: #8b3a2b; /* Heritage terracotta / warm crimson */
+  --popover-foreground: #1c1917;
+  --primary: #9a3412; /* Radiant Terracotta */
   --primary-foreground: #ffffff;
-  --secondary: #f0ebe1;
-  --secondary-foreground: #4a3b32;
-  --muted: #f4efe6;
-  --muted-foreground: #786a5e;
-  --accent: #d4a373; /* Warm gold / brass */
-  --accent-foreground: #2c2523;
-  --destructive: #be123c;
+  --secondary: #f5efe6;
+  --secondary-foreground: #443a34;
+  --muted: #f3ece1;
+  --muted-foreground: #786f66;
+  --accent: #d97706; /* Luminous Warm Gold */
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #e6ded3;
-  --input: #ded5c8;
-  --ring: #8b3a2b;
-  --radius: 0.75rem;
+  --border: #e7dfd5;
+  --input: #e0d7cb;
+  --ring: #d97706;
+  --radius: 1rem;
 
-  /* Custom heritage accents */
-  --heritage-gold: #c8963e;
-  --heritage-crimson: #8b261e;
-  --heritage-indigo: #2c3e50;
-  --heritage-parchment: #fcf9f2;
-  --heritage-sand: #e8dfcf;
-  --heritage-wood: #4a3319;
+  /* Vibrant Heritage Jewel Tones */
+  --glow-gold: rgba(217, 119, 6, 0.25);
+  --glow-crimson: rgba(185, 28, 28, 0.2);
+  --glow-emerald: rgba(5, 150, 105, 0.2);
 }
 
 .dark {
-  --background: #141110;
-  --foreground: #ede8e3;
-  --card: #1c1816;
-  --card-foreground: #ede8e3;
-  --popover: #1c1816;
-  --popover-foreground: #ede8e3;
-  --primary: #c96555;
+  --background: #0f141c; /* Deep Luminous Obsidian */
+  --foreground: #f3f4f6;
+  --card: #18202c;
+  --card-foreground: #f3f4f6;
+  --popover: #18202c;
+  --popover-foreground: #f3f4f6;
+  --primary: #ea580c; /* Vivid Warm Crimson */
   --primary-foreground: #ffffff;
-  --secondary: #27211e;
-  --secondary-foreground: #ded6cc;
-  --muted: #241e1c;
-  --muted-foreground: #a39587;
-  --accent: #b08252;
-  --accent-foreground: #ffffff;
-  --destructive: #f43f5e;
+  --secondary: #1e293b;
+  --secondary-foreground: #e2e8f0;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #f59e0b; /* Bright Amber Gold */
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #332b26;
-  --input: #38302a;
-  --ring: #c96555;
+  --border: #283548;
+  --input: #283548;
+  --ring: #f59e0b;
 
-  --heritage-gold: #d4a755;
-  --heritage-crimson: #b3392f;
-  --heritage-indigo: #486581;
-  --heritage-parchment: #1c1816;
-  --heritage-sand: #2a231f;
-  --heritage-wood: #2c1e10;
+  --glow-gold: rgba(245, 158, 11, 0.35);
+  --glow-crimson: rgba(234, 88, 12, 0.3);
+  --glow-emerald: rgba(16, 185, 129, 0.25);
 }
 
 body {
@@ -70,29 +64,36 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbars with subtle heritage style */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Interactive Card & Button Glow Effects */
+.interactive-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-::-webkit-scrollbar-track {
-  background: var(--muted);
+.interactive-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--ring);
 }
-::-webkit-scrollbar-thumb {
-  background: var(--input);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+.dark .interactive-card:hover {
+  box-shadow: 0 14px 32px -6px rgba(0, 0, 0, 0.5), 0 0 20px var(--glow-gold);
 }
 
-/* React Flow customizations for elegant heritage tree look */
+.interactive-btn {
+  transition: all 0.2s ease-in-out;
+}
+.interactive-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+.interactive-btn:active {
+  transform: translateY(0);
+}
+
+/* React Flow node and edge styling */
 .react-flow__node {
   cursor: pointer;
 }
 
 .react-flow__edge-path {
-  stroke: #8b3a2b;
+  stroke: #ea580c;
   stroke-width: 2.5;
 }
 
