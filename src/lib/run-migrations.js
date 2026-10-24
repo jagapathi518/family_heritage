@@ -2,21 +2,29 @@ const { Client } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
+// Load environment variables from .env.local if present
+try {
+  if (process.loadEnvFile) {
+    process.loadEnvFile(path.resolve(__dirname, '../../.env.local'));
+  }
+} catch (e) {}
+
 async function run() {
-  const connectionStrings = [
-    // Direct connection
-    'postgresql://postgres:Jagapathi%40518@db.zykmfbkqubietfzlrlvu.supabase.co:5432/postgres',
-    // Session pooler (IPv4 compatible)
-    'postgresql://postgres.zykmfbkqubietfzlrlvu:Jagapathi%40518@aws-0-ap-south-1.pooler.supabase.com:5432/postgres',
-    'postgresql://postgres.zykmfbkqubietfzlrlvu:Jagapathi%40518@aws-0-us-east-1.pooler.supabase.com:5432/postgres',
-  ];
+  const dbPassword = process.env.SUPABASE_DB_PASSWORD || process.env.DATABASE_PASSWORD || '';
+  const encodedPassword = encodeURIComponent(dbPassword);
+
+  const connectionStrings = process.env.DATABASE_URL
+    ? [process.env.DATABASE_URL]
+    : [
+        `postgresql://postgres:${encodedPassword}@db.zykmfbkqubietfzlrlvu.supabase.co:5432/postgres`,
+        `postgresql://postgres.zykmfbkqubietfzlrlvu:${encodedPassword}@aws-0-ap-south-1.pooler.supabase.com:5432/postgres`,
+      ];
 
   let client = null;
   let connected = false;
 
   for (const connStr of connectionStrings) {
     try {
-      console.log('Attempting connection to:', connStr.split('@')[1]);
       client = new Client({
         connectionString: connStr,
         ssl: { rejectUnauthorized: false },
@@ -27,7 +35,6 @@ async function run() {
       connected = true;
       break;
     } catch (err) {
-      console.log('Connection failed:', err.message);
       if (client) {
         try { await client.end(); } catch (e) {}
       }
@@ -35,7 +42,7 @@ async function run() {
   }
 
   if (!connected || !client) {
-    console.error('Could not connect to Supabase PostgreSQL directly. Will provide SQL copy instruction.');
+    console.log('Could not connect directly via node-postgres. Migrations can also be run in Supabase SQL editor.');
     return;
   }
 
